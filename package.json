@@ -1,0 +1,14 @@
+{
+  "name": "@fxlisten/backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "prettier:check": "prettier --config .prettierrc \"**/*.js\"",
+    "prettier:write": "prettier --config .prettierrc --write \"**/*.js\""
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^1.16.1"
+  }
+}
