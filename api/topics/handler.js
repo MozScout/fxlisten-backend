@@ -32,7 +32,7 @@ const list = async (event, context) => {
 };
 
 const update = async (event, context) => {
-  const { userId, topic } = event.queryStringParameters;
+  const { userId, topic } = JSON.parse(event.body);
   if (userId && topic) {
     let user = await User.get(userId);
     let topics = user.topics.split(",");
@@ -56,7 +56,7 @@ const update = async (event, context) => {
 };
 
 const del = async (event, context) => {
-  const { userId, topic } = event.queryStringParameters;
+  const { userId, topic } = JSON.parse(event.body);
   if (userId && topic) {
     let user = await User.get(userId);
     let topics = user.topics.split(",");

@@ -5,7 +5,7 @@ const fxlisten = require("@fxlisten/core");
 const { User } = fxlisten.dynamo;
 
 const create = async (event, context) => {
-  const { topics } = event.queryStringParameters;
+  const { topics } = JSON.parse(event.body);
   if (topics && Array.isArray(topics.split(","))) {
     const userId = uuid();
     let user = new User({
