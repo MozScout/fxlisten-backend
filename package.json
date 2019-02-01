@@ -10,5 +10,10 @@
   "license": "MIT",
   "devDependencies": {
     "prettier": "^1.16.1"
+  },
+  "dependencies": {
+    "install": "^0.12.2",
+    "npm": "^6.7.0",
+    "uuid": "^3.3.2"
   }
 }
