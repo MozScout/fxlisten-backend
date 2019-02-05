@@ -1,20 +1,25 @@
 "use strict";
 
 const fxlisten = require("@fxlisten/core");
-const { Category } = fxlisten.dynamo;
+const mozcast = fxlisten.mozcast;
 
 const list = async (event, context) => {
   const { topic } = event.queryStringParameters;
   if (topic) {
-    var params = {
-      FilterExpression: "parent = :parent",
-      ExpressionAttributeValues: {
-        ":parent": topic
+    const GET_SUBCATEGORIES = ` 
+      query($parent: ID!) {
+        subCategories(parent: $parent) {
+          id
+          name
+        }
       }
-    };
-    const categories = await Category.scan(params).exec();
-    const topics = categories.map(category => {
+    `;
+    const { subCategories } = await mozcast.graphql(GET_SUBCATEGORIES, {
+      parent: topic
+    });
+    const topics = subCategories.map(category => {
       return {
+        id: category.id,
         topic: category.name,
         image_url: ""
       };

@@ -29,7 +29,6 @@ Each service makes use of **@fxlisten/core**, a private npm module and shared li
   $ npm install
   ```
 
-
 ## Configuring AWS credentials
 
 Before working with serverless, you'll need to create an IAM user on AWS with admin access. Then run the following command:
