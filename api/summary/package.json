@@ -1,20 +1,19 @@
 {
-  "name": "@fxlisten/topics",
+  "name": "@fxlisten/summary",
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "start": "serverless offline start --stage dev",
-    "deploy": "serverless deploy --stage dev",
-    "undeploy": "serverless remove --stage dev"
+    "start": "serverless offline start --stage dev-test",
+    "deploy": "serverless deploy --stage dev-test",
+    "undeploy": "serverless remove --stage dev-test"
   },
-  "author": "",
+  "author": "Tamara Hills",
   "license": "MIT",
   "dependencies": {
     "@fxlisten/core": "file:../../core",
-    "apollo-server-lambda": "^2.1.0",
-    "app-root-dir": "^1.0.2",
-    "lodash": "^4.17.11",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "serverless-offline": "^3.27.0"
   }
 }
