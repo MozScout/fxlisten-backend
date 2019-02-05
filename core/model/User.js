@@ -6,14 +6,14 @@ let AWS = require("aws-sdk");
 let dynamoDB = new AWS.DynamoDB();
 dynamoose.setDDB(dynamoDB);
 
-const table = `categories-${process.env.ENV}`;
-let Category = dynamoose.model(
+const table = `users-${process.env.ENV}`;
+let User = dynamoose.model(
   table,
   {
     id: String,
-    name: String
+    topics: String
   },
   { update: true }
 );
 
-exports.model = Category;
+exports.model = User;

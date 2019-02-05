@@ -14,8 +14,14 @@ provider:
         - "dynamodb:*"
       Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/*"
 
-functions:
+plugins:
+  - serverless-offline
 
+custom:
+  serverless-offline:
+    port: 4000
+
+functions:
   list:
     handler: handler.list
     events:

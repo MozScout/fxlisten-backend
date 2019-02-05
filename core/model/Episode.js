@@ -7,22 +7,26 @@ let dynamoDB = new AWS.DynamoDB();
 dynamoose.setDDB(dynamoDB);
 
 const table = `episodes-${process.env.ENV}`;
-let Episode = dynamoose.model(table, {
-  id: String,
-  podcastId: String,
-  guid: String,
-  title: String,
-  description: String,
-  explicit: Boolean,
-  image: String,
-  published: String,
-  duration: String,
-  filesize: String,
-  filetype: String,
-  audioUrl: String,
-  internalUrl: String,
-  transcriptUrl: String,
-  transcript: String
-});
+let Episode = dynamoose.model(
+  table,
+  {
+    id: String,
+    podcastId: String,
+    guid: String,
+    title: String,
+    description: String,
+    explicit: Boolean,
+    image: String,
+    published: String,
+    duration: String,
+    filesize: String,
+    filetype: String,
+    audioUrl: String,
+    internalUrl: String,
+    transcriptUrl: String,
+    transcript: String
+  },
+  { update: true }
+);
 
 exports.model = Episode;
