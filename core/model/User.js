@@ -11,7 +11,8 @@ let User = dynamoose.model(
   table,
   {
     id: String,
-    topics: String
+    topics: String,
+    subscriptions: String
   },
   { update: true }
 );
