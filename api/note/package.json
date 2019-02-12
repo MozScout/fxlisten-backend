@@ -4,7 +4,7 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "start": "serverless offline start --stage dev-test",
+    "start": "serverless offline start --noAuth --stage dev-test",
     "deploy": "serverless deploy --stage dev-test",
     "undeploy": "serverless remove --stage dev-test"
   },

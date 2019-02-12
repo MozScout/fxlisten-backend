@@ -1,7 +1,6 @@
-"use strict";
+'use strict';
 
-const fxlisten = require("@fxlisten/core");
-const mozcast = fxlisten.mozcast;
+const { response, mozcast } = require('@fxlisten/core');
 
 const list = async (event, context) => {
   const { topic } = event.queryStringParameters;
@@ -21,20 +20,12 @@ const list = async (event, context) => {
       return {
         id: category.id,
         topic: category.name,
-        image_url: ""
+        image_url: ''
       };
     });
-    return {
-      statusCode: 200,
-      body: JSON.stringify(topics)
-    };
+    return response.success(topics);
   } else {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Missing URL parameters"
-      })
-    };
+    return response.failure({ message: 'Missing URL parameters' });
   }
 };
 

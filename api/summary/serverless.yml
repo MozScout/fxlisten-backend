@@ -23,3 +23,5 @@ functions:
           path: summary
           method: post
           cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}

@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-let dynamoose = require("dynamoose");
-let AWS = require("aws-sdk");
+let dynamoose = require('dynamoose');
+let AWS = require('aws-sdk');
 
 let dynamoDB = new AWS.DynamoDB();
 dynamoose.setDDB(dynamoDB);

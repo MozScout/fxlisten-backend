@@ -1,5 +1,5 @@
 {
-  "name": "@fxlisten/user",
+  "name": "@fxlisten/authorizer",
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
@@ -8,12 +8,9 @@
     "deploy": "serverless deploy --stage dev-test",
     "undeploy": "serverless remove --stage dev-test"
   },
-  "author": "",
+  "author": "Leroy Ware",
   "license": "MIT",
   "dependencies": {
-    "@fxlisten/core": "file:../../core",
-    "serverless-dynamodb-autoscaling": "^0.6.2",
-    "serverless-offline": "^3.27.0",
-    "uuid": "^3.3.2"
+    "@fxlisten/core": "file:../../core"
   }
 }

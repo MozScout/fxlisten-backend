@@ -1,4 +1,4 @@
-service: subTopicList
+service: authorizer
 
 provider:
   name: aws
@@ -8,27 +8,13 @@ provider:
   environment:
     ENV: ${opt:stage, 'local'}
     REGION: ${self:provider.region}
+    JWT_SECRET: ${ssm:JWT_SECRET~true}
   iamRoleStatements:
     - Effect: Allow
       Action:
         - "dynamodb:*"
       Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/*"
 
-plugins:
-  - serverless-offline
-
-custom:
-  serverless-offline:
-    port: 4000
-    debug: false
-
 functions:
-  list:
-    handler: handler.list
-    events:
-      - http:
-          path: subTopicList
-          method: get
-          cors: true
-          authorizer: 
-            arn: ${ssm:AUTHORIZER_ARN~true}
+  authorize:
+    handler: handler.authorize

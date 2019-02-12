@@ -1,7 +1,6 @@
-"use strict";
+'use strict';
 
-const fxlisten = require("@fxlisten/core");
-const mozcast = fxlisten.mozcast;
+const { response, mozcast } = require('@fxlisten/core');
 
 const list = async (event, context) => {
   const GET_CATEGORIES = ` 
@@ -17,13 +16,10 @@ const list = async (event, context) => {
     return {
       id: category.id,
       topic: category.name,
-      image_url: ""
+      image_url: ''
     };
   });
-  return {
-    statusCode: 200,
-    body: JSON.stringify(topics)
-  };
+  return response.success(topics);
 };
 
 module.exports = {

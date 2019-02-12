@@ -19,7 +19,7 @@ plugins:
 
 custom:
   serverless-offline:
-    port: 4000
+    port: 4002
     debug: false
 
 functions:
@@ -30,3 +30,5 @@ functions:
           path: topicList
           method: get
           cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
