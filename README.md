@@ -63,6 +63,14 @@ To undeploy the backend from AWS, cd into each service's folder and type:
   $ sls remove --stage <stage-name>
   ``` 
 
+## Pushing Code
+
+Before submitting pull requests, run the following command to prettify your code:
+
+  ```
+  npm run prettier:write
+  ```
+
 ## Continuous Integration
 
 Our continuous integration pipeline runs on [Seed](http://seed.run).

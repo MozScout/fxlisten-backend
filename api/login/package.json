@@ -1,14 +1,14 @@
 {
-  "name": "@fxlisten/listenList",
+  "name": "@fxlisten/login",
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "start": "serverless offline start --noAuth --stage dev-test",
+    "start": "serverless offline start --stage dev-test",
     "deploy": "serverless deploy --stage dev-test",
     "undeploy": "serverless remove --stage dev-test"
   },
-  "author": "",
+  "author": "Leroy Ware",
   "license": "MIT",
   "dependencies": {
     "@fxlisten/core": "file:../../core",

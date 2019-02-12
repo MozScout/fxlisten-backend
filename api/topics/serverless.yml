@@ -29,6 +29,7 @@ functions:
           path: topics
           method: get
           cors: true
+          authorizer: ${ssm:AUTHORIZER_ARN~true}
 
   update:
     handler: handler.update
@@ -37,6 +38,7 @@ functions:
           path: topics
           method: put
           cors: true
+          authorizer: ${ssm:AUTHORIZER_ARN~true}
 
   delete:
     handler: handler.del
@@ -45,4 +47,6 @@ functions:
           path: topics
           method: delete
           cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
 

@@ -1,11 +1,10 @@
-"use strict";
+'use strict';
 
-const fxlisten = require("@fxlisten/core");
-const { User } = fxlisten.dynamo;
-const mozcast = fxlisten.mozcast;
+const { response, dynamo, mozcast } = require('@fxlisten/core');
+const { User } = dynamo;
 
 const list = async (event, context) => {
-  const { userId } = event.queryStringParameters;
+  const userId = event.requestContext.authorizer.principalId;
   if (userId) {
     const user = await User.get(userId);
     const GET_CATEGORIES = ` 
@@ -16,7 +15,7 @@ const list = async (event, context) => {
         }
       }
     `;
-    const ids = user.topics ? user.topics.split(",") : [];
+    const ids = user.topics ? user.topics.split(',') : [];
     const { categories } = ids.length
       ? await mozcast.graphql(GET_CATEGORIES, { ids: ids })
       : { categories: ids };
@@ -24,68 +23,46 @@ const list = async (event, context) => {
       return {
         id: category.id,
         topic: category.name,
-        image_url: ""
+        image_url: ''
       };
     });
-    return {
-      statusCode: 200,
-      body: JSON.stringify(topics)
-    };
+    return response.success(topics);
   } else {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Missing URL parameters"
-      })
-    };
+    return response.failure({ message: 'Missing URL parameters' });
   }
 };
 
 const update = async (event, context) => {
-  const { userId, topic } = JSON.parse(event.body);
+  const userId = event.requestContext.authorizer.principalId;
+  const { topic } = JSON.parse(event.body);
   if (userId && topic) {
     let user = await User.get(userId);
-    let topics = user.topics ? user.topics.split(",") : [];
+    let topics = user.topics ? user.topics.split(',') : [];
     if (!topics.includes(topic)) topics.push(topic);
-    user.topics = topics.join(",");
+    user.topics = topics.join(',');
     await user.save();
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Topic successfully added to list."
-      })
-    };
+    return response.success({
+      message: 'Topic successfully added to list.'
+    });
   } else {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Missing URL parameters"
-      })
-    };
+    return response.failure({ message: 'Missing URL parameters' });
   }
 };
 
 const del = async (event, context) => {
-  const { userId, topic } = JSON.parse(event.body);
+  const userId = event.requestContext.authorizer.principalId;
+  const { topic } = JSON.parse(event.body);
   if (userId && topic) {
     let user = await User.get(userId);
-    let topics = user.topics ? user.topics.split(",") : [];
+    let topics = user.topics ? user.topics.split(',') : [];
     topics = topics.filter(id => id !== topic);
-    user.topics = topics.join(",");
+    user.topics = topics.join(',');
     await user.save();
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Topic successfully removed from list."
-      })
-    };
+    return response.success({
+      message: 'Topic successfully removed from list.'
+    });
   } else {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Missing URL parameters"
-      })
-    };
+    return response.failure({ message: 'Missing URL parameters' });
   }
 };
 

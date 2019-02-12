@@ -28,6 +28,8 @@ functions:
           path: subscriptionList
           method: get
           cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
 
   update:
     handler: handler.update
@@ -36,6 +38,8 @@ functions:
           path: subscriptionList
           method: put
           cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
 
   delete:
     handler: handler.del
@@ -44,3 +48,5 @@ functions:
           path: subscriptionList
           method: delete
           cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}

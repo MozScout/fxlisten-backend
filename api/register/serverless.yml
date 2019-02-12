@@ -1,4 +1,4 @@
-service: user
+service: register
 
 provider:
   name: aws
@@ -8,6 +8,7 @@ provider:
   environment:
     ENV: ${opt:stage, 'local'}
     REGION: ${self:provider.region}
+    JWT_SECRET: ${ssm:JWT_SECRET~true}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -33,11 +34,11 @@ custom:
         usage: 0.75
 
 functions:
-  create:
-    handler: handler.create
+  register:
+    handler: handler.register
     events:
       - http:
-          path: user
+          path: register
           method: post
           cors: true
 
