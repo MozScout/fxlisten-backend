@@ -19,7 +19,7 @@ plugins:
 
 custom:
   serverless-offline:
-    port: 4002
+    port: 4000
     debug: false
 
 functions:

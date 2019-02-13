@@ -3,8 +3,8 @@
 const { response, mozcast } = require('@fxlisten/core');
 
 const list = async (event, context) => {
-  const { topic } = event.queryStringParameters;
-  if (topic) {
+  const { id } = event.queryStringParameters;
+  if (id) {
     const GET_SUBCATEGORIES = ` 
       query($parent: ID!) {
         subCategories(parent: $parent) {
@@ -14,13 +14,13 @@ const list = async (event, context) => {
       }
     `;
     const { subCategories } = await mozcast.graphql(GET_SUBCATEGORIES, {
-      parent: topic
+      parent: id
     });
     const topics = subCategories.map(category => {
       return {
         id: category.id,
-        topic: category.name,
-        image_url: ''
+        name: category.name,
+        imageUrl: ''
       };
     });
     return response.success(topics);

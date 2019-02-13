@@ -20,7 +20,7 @@ plugins:
 
 custom:
   serverless-offline:
-    port: 4001
+    port: 4000
 
 functions:
   login:

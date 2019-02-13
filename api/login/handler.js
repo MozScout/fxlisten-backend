@@ -9,7 +9,7 @@ const login = async (event, context) => {
     let user = await User.get(userId);
     if (user) {
       const token = await jwt.sign(userId);
-      return response.success({ userId, token });
+      return response.success({ token });
     } else {
       return response.unauthorized();
     }

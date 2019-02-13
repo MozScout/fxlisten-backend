@@ -65,7 +65,7 @@ To undeploy the backend from AWS, cd into each service's folder and type:
 
 ## Pushing Code
 
-Before submitting pull requests, run the following command to prettify your code:
+Before submitting pull requests, run the following command to beautify your code:
 
   ```
   npm run prettier:write
