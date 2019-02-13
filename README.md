@@ -43,7 +43,7 @@ To start a services, cd into the service's folder and type:
 
 
   ```
-  $ sls offline start --stage <stage-name>
+  $ npm start
   ```
 
 ## Deploying Manually
@@ -52,7 +52,7 @@ To deploy services to AWS, cd into each service's folder and type:
 
 
   ```
-  $ sls deploy --stage <stage-name>
+  $ npm run deploy
   ``` 
 
 ## Undeploying Manually
@@ -60,7 +60,7 @@ To deploy services to AWS, cd into each service's folder and type:
 To undeploy the backend from AWS, cd into each service's folder and type:
 
   ```
-  $ sls remove --stage <stage-name>
+  $ npm run undeploy
   ``` 
 
 ## Pushing Code
