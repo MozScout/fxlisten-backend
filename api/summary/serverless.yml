@@ -1,6 +1,4 @@
-# Service name
 service: summary
-
 
 provider:
   name: aws

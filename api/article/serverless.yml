@@ -1,6 +1,4 @@
-# Service name
 service: article
-
 
 provider:
   name: aws

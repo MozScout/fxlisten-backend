@@ -22,8 +22,8 @@ const list = async (event, context) => {
     const topics = categories.map(category => {
       return {
         id: category.id,
-        topic: category.name,
-        image_url: ''
+        name: category.name,
+        imageUrl: ''
       };
     });
     return response.success(topics);
@@ -34,15 +34,15 @@ const list = async (event, context) => {
 
 const update = async (event, context) => {
   const userId = event.requestContext.authorizer.principalId;
-  const { topic } = JSON.parse(event.body);
-  if (userId && topic) {
+  const { id } = JSON.parse(event.body);
+  if (userId && id) {
     let user = await User.get(userId);
     let topics = user.topics ? user.topics.split(',') : [];
-    if (!topics.includes(topic)) topics.push(topic);
+    if (!topics.includes(id)) topics.push(id);
     user.topics = topics.join(',');
     await user.save();
     return response.success({
-      message: 'Topic successfully added to list.'
+      message: 'Successfully subscribed to topic.'
     });
   } else {
     return response.failure({ message: 'Missing URL parameters' });
@@ -51,15 +51,15 @@ const update = async (event, context) => {
 
 const del = async (event, context) => {
   const userId = event.requestContext.authorizer.principalId;
-  const { topic } = JSON.parse(event.body);
-  if (userId && topic) {
+  const { id } = JSON.parse(event.body);
+  if (userId && id) {
     let user = await User.get(userId);
     let topics = user.topics ? user.topics.split(',') : [];
-    topics = topics.filter(id => id !== topic);
+    topics = topics.filter(topicId => topicId !== id);
     user.topics = topics.join(',');
     await user.save();
     return response.success({
-      message: 'Topic successfully removed from list.'
+      message: 'Successfully unsubscribed from topic.'
     });
   } else {
     return response.failure({ message: 'Missing URL parameters' });

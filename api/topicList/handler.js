@@ -15,8 +15,8 @@ const list = async (event, context) => {
   const topics = categories.map(category => {
     return {
       id: category.id,
-      topic: category.name,
-      image_url: ''
+      name: category.name,
+      imageUrl: ''
     };
   });
   return response.success(topics);
