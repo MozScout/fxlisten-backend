@@ -1,0 +1,158 @@
+service: api
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+  stage: ${opt:stage, 'local'}
+  environment:
+    ENV: ${self:provider.stage}
+    LISTEN_SERVER: ${ssm:listen_server~true}
+    LISTEN_JWT: ${ssm:listen_jwt~true}
+    JWT_SECRET: ${ssm:JWT_SECRET~true}
+    DOMAIN: ${ssm:DOMAIN~true}
+    CERTIFICATE: ${ssm:CERTIFICATE~true}
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - "dynamodb:*"
+    Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/*"
+
+plugins:
+  - serverless-offline
+  - serverless-dynamodb-autoscaling
+  - serverless-domain-manager
+
+custom:
+  serverless-offline:
+    port: 4000
+  capacities:
+    - table: usersTable
+      read:
+        minimum: 5
+        maximum: 100
+        usage: 0.75
+      write:
+        minimum: 5
+        maximum: 100
+        usage: 0.75
+  customDomain:
+    domainName: ${self:provider.environment.DOMAIN}
+    stage: ${self:provider.stage}
+    basePath: ""
+    certificateName: ${self:provider.environment.CERTIFICATE}
+    createRoute53Record: true
+           
+functions:
+  login:
+    handler: handlers/login.handler
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+  register:
+    handler: handlers/register.handler
+    events:
+      - http:
+          path: register
+          method: post
+          cors: true
+  topicList:
+    handler: handlers/topicList.handler
+    events:
+      - http:
+          path: topicList
+          method: get
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+  subTopicList:
+    handler: handlers/subTopicList.handler
+    events:
+      - http:
+          path: subTopicList
+          method: get
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+  topics:
+    handler: handlers/topics.handler
+    events:
+      - http:
+          path: topics
+          method: get
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+      - http:
+          path: topics
+          method: put
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+      - http:
+          path: topics
+          method: delete
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+  article:
+    handler: handlers/article.handler
+    events:
+      - http:
+          path: article
+          method: post
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+  subscriptionList:
+    handler: handlers/subscriptionList.handler
+    events:
+      - http:
+          path: subscriptionList
+          method: get
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+      - http:
+          path: subscriptionList
+          method: put
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+      - http:
+          path: subscriptionList
+          method: delete
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+  summary:
+    handler: handlers/summary.handler
+    events:
+      - http:
+          path: summary
+          method: post
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: users-${self:provider.environment.ENV}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+
+

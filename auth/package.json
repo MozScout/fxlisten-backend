@@ -1,0 +1,16 @@
+{
+  "name": "@fxlisten/authorizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "start": "serverless offline start --stage test",
+    "deploy": "serverless deploy --stage test",
+    "undeploy": "serverless remove --stage test"
+  },
+  "author": "Leroy Ware",
+  "license": "MIT",
+  "dependencies": {
+    "@fxlisten/core": "file:../core"
+  }
+}

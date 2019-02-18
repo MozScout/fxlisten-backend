@@ -4,16 +4,11 @@
   "description": "",
   "scripts": {
     "prettier:check": "prettier --config .prettierrc \"**/*.js\"",
-    "prettier:write": "prettier --config .prettierrc --write \"**/*.js\"",
-    "deploy": "node deploy.js",
-    "undeploy": "node undeploy.js"
+    "prettier:write": "prettier --config .prettierrc --write \"**/*.js\""
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "prettier": "^1.16.1"
-  },
-  "dependencies": {
-    "async": "^2.6.1"
   }
 }
