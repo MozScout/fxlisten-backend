@@ -1,0 +1,23 @@
+{
+  "name": "@fxlisten/backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "serverless offline start --noAuth --stage test",
+    "deploy": "serverless deploy --stage test",
+    "undeploy": "serverless remove --stage test"
+  },
+  "author": "Tamara Hills",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-offline": "^3.27.0",
+    "serverless-domain-manager": "^2.6.13"
+  },
+  "dependencies": {
+    "@fxlisten/core": "file:../core",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "serverless-dynamodb-autoscaling": "^0.6.2",
+    "uuid": "^3.3.2"
+  }
+}
