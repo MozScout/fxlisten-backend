@@ -72,6 +72,8 @@ functions:
           path: search
           method: get
           cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
   subTopicList:
     handler: handlers/subTopicList.handler
     events:
