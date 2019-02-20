@@ -65,6 +65,13 @@ functions:
           path: topicList
           method: get
           cors: true
+  search:
+    handler: handlers/search.handler
+    events:
+      - http:
+          path: search
+          method: get
+          cors: true
   subTopicList:
     handler: handlers/subTopicList.handler
     events:
