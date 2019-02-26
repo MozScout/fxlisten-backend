@@ -81,6 +81,15 @@ functions:
           path: subTopicList
           method: get
           cors: true
+  listenList:
+    handler: handlers/listenList.handler
+    events:
+      - http:
+          path: listenList
+          method: get
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
   topics:
     handler: handlers/topics.handler
     events:

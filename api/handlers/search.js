@@ -26,18 +26,18 @@ module.exports.handler = async (event, context) => {
   `;
   const { search } = await mozcast.graphql(SEARCH, { query: q });
   const results = search.map(result => {
-  	const item = {
+    let item = {
       id: result.id,
       title: result.title,
       description: result.description,
       imageUrl: result.image,
       type: result.__typename.toLowerCase()
-    };	
+    };
     if (result.__typename == 'Podcast') {
-    	item.feedUrl = result.feedUrl;
+      item.feedUrl = result.feedUrl;
     }
     if (result.__typename == 'Episode') {
-    	item.audioUrl = result.audioUrl;
+      item.audioUrl = result.audioUrl;
     }
     return item;
   });

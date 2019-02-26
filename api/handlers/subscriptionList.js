@@ -36,29 +36,6 @@ module.exports.handler = async (event, context) => {
 // response format for this method is not finished
 // need to incorporate articles and combine results
 const list = async (userId, event) => {
-  const items = await getPodcasts(userId);
-  return items;
-};
-
-const update = async (userId, event) => {
-  let user = await User.get(userId);
-  let subscriptions = user[type] ? user[type].split(',') : [];
-  if (!subscriptions.includes(id)) subscriptions.push(id);
-  user[type] = subscriptions.join(',');
-  await user.save();
-  return user;
-};
-
-const del = async (userId, event) => {
-  let user = await User.get(userId);
-  let subscriptions = user[type] ? user[type].split(',') : [];
-  subscriptions = subscriptions.filter(itemId => itemId !== id);
-  user[type] = subscriptions.join(',');
-  await user.save();
-  return user;
-};
-
-const getPodcasts = async userId => {
   const user = await User.get(userId);
   const GET_PODCASTS = `
     query($ids: [ID]) {
@@ -86,6 +63,20 @@ const getPodcasts = async userId => {
   return podcasts;
 };
 
-const getArticles = async userId => {
-  // implement scout integration
+const update = async (userId, event) => {
+  let user = await User.get(userId);
+  let subscriptions = user[type] ? user[type].split(',') : [];
+  if (!subscriptions.includes(id)) subscriptions.push(id);
+  user[type] = subscriptions.join(',');
+  await user.save();
+  return user;
+};
+
+const del = async (userId, event) => {
+  let user = await User.get(userId);
+  let subscriptions = user[type] ? user[type].split(',') : [];
+  subscriptions = subscriptions.filter(itemId => itemId !== id);
+  user[type] = subscriptions.join(',');
+  await user.save();
+  return user;
 };

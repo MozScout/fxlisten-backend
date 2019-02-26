@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@fxlisten/core": "file:../core",
+    "await-to-js": "^2.1.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "serverless-dynamodb-autoscaling": "^0.6.2",
