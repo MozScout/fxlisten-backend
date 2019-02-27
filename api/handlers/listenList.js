@@ -36,7 +36,10 @@ const list = async userId => {
       title: article.title,
       imageUrl: article.image_url,
       url: article.url,
-      type: 'article'
+      type: 'article',
+      logo: article.logo,
+      duration: article.duration,
+      publisher: article.domain_name
     };
   });
   const episodesArray = episodes.map(episode => {
@@ -45,11 +48,13 @@ const list = async userId => {
       title: episode.title,
       imageUrl: episode.image,
       audioUrl: episode.audioUrl,
-      type: 'episode'
+      type: 'episode',
+      publisher: episode.publisher,
+      duration: Math.round(episode.duration/60)
     };
   });
   if (articlesArray.length && episodesArray.length) {
-    return _.merge(articlesArray, episodesArray);
+    return articlesArray.concat(episodesArray);
   } else if (articlesArray.length && !episodesArray.length) {
     return articlesArray;
   } else if (!articlesArray.length && episodesArray.length) {
@@ -84,6 +89,8 @@ const getEpisodes = async podcasts => {
         description
         audioUrl
         image
+        publisher
+        duration
       }
     }
   `;
