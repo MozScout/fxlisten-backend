@@ -3,7 +3,7 @@ const { response } = require('@fxlisten/core');
 const rp = require('request-promise');
 
 const articleOptions = {
-  uri: process.env.LISTEN_SERVER + 'command/webpage',
+  uri: process.env.LISTEN_SERVER + '/command/webpage',
   method: 'POST',
   body: '',
   headers: {
