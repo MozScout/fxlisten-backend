@@ -3,7 +3,7 @@ const { response } = require('@fxlisten/core');
 const rp = require('request-promise');
 
 const summaryOptions = {
-  uri: process.env.LISTEN_SERVER + 'command/summary',
+  uri: process.env.LISTEN_SERVER + '/command/webpage',
   method: 'POST',
   body: '',
   headers: {
@@ -17,7 +17,8 @@ module.exports.handler = async (event, context) => {
   summaryOptions.form = {
     url: jsonBody.url,
     locale: 'en-US',
-    v: '1'
+    v: '1',
+    summary: '1'
   };
   const summary = JSON.parse(await rp(summaryOptions));
   return response.success(summary);

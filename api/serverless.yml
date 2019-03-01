@@ -74,6 +74,7 @@ functions:
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
   subTopicList:
     handler: handlers/subTopicList.handler
     events:
@@ -90,6 +91,7 @@ functions:
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
   topics:
     handler: handlers/topics.handler
     events:
@@ -99,18 +101,21 @@ functions:
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
       - http:
           path: topics
           method: put
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
       - http:
           path: topics
           method: delete
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
   article:
     handler: handlers/article.handler
     events:
@@ -120,6 +125,7 @@ functions:
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
   subscriptionList:
     handler: handlers/subscriptionList.handler
     events:
@@ -129,18 +135,21 @@ functions:
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
       - http:
           path: subscriptionList
           method: put
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
       - http:
           path: subscriptionList
           method: delete
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
   summary:
     handler: handlers/summary.handler
     events:
@@ -150,6 +159,7 @@ functions:
           cors: true
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
 
 resources:
   Resources:
