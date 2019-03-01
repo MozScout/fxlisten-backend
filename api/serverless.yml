@@ -157,6 +157,30 @@ functions:
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
             resultTtlInSeconds: 0
+  notesList:
+    handler: handlers/notesList.handler
+    events:
+      - http:
+          path: notesList
+          method: get
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
+      - http:
+          path: notesList
+          method: post
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
+      - http:
+          path: notesList
+          method: delete
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
   summary:
     handler: handlers/summary.handler
     events:
@@ -185,5 +209,43 @@ resources:
           WriteCapacityUnits: 5
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
+    notesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: notes-${self:provider.environment.ENV}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: itemId
+            AttributeType: S
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        GlobalSecondaryIndexes:
+        - IndexName: userIndex
+          KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          Projection:
+            ProjectionType: KEYS_ONLY
+          ProvisionedThroughput:
+            ReadCapacityUnits: '5'
+            WriteCapacityUnits: '5'
+        - IndexName: itemIndex
+          KeySchema:
+          - AttributeName: itemId
+            KeyType: HASH
+          Projection:
+            ProjectionType: KEYS_ONLY
+          ProvisionedThroughput:
+            ReadCapacityUnits: '5'
+            WriteCapacityUnits: '5'
 
 

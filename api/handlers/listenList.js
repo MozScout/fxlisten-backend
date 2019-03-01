@@ -6,7 +6,6 @@ const rp = require('request-promise');
 const _ = require('lodash');
 const { User } = dynamo;
 
-
 module.exports.handler = async (event, context) => {
   const userId = event.requestContext.authorizer.principalId;
   let items;
@@ -66,7 +65,7 @@ const list = async userId => {
       audioUrl: episode.audioUrl,
       type: 'episode',
       publisher: episode.publisher,
-      duration: Math.round(episode.duration/60)
+      duration: Math.round(episode.duration / 60)
     };
   });
   if (articlesArray.length && episodesArray.length) {
