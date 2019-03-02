@@ -92,6 +92,13 @@ functions:
           authorizer: 
             arn: ${ssm:AUTHORIZER_ARN~true}
             resultTtlInSeconds: 0
+      - http:
+          path: listenList
+          method: delete
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
   topics:
     handler: handlers/topics.handler
     events:

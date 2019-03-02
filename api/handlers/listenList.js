@@ -6,11 +6,27 @@ const rp = require('request-promise');
 const _ = require('lodash');
 const { User } = dynamo;
 
+
 module.exports.handler = async (event, context) => {
-  let userId = event.requestContext.authorizer.principalId;
+  const userId = event.requestContext.authorizer.principalId;
   let items;
-  items = await list(userId);
-  return response.success(items);
+  if (userId) {
+    switch (event.httpMethod) {
+      case 'GET':
+        items = await list(userId);
+        return response.success(items);
+        break;
+      case 'DELETE':
+        return response.success({
+          message: 'Successfully removed item from listen list.'
+        });
+        break;
+      default:
+        return response.failure({ message: 'Invalid HTTP method.' });
+    }
+  } else {
+    return response.failure({ message: 'Missing URL parameters' });
+  }
 };
 
 const list = async userId => {
