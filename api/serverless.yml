@@ -36,6 +36,24 @@ custom:
         minimum: 5
         maximum: 100
         usage: 0.75
+    - table: notesTable
+      read:
+        minimum: 5
+        maximum: 100
+        usage: 0.75
+      write:
+        minimum: 5
+        maximum: 100
+        usage: 0.75
+    - table: eventsTable
+      read:
+        minimum: 5
+        maximum: 100
+        usage: 0.75
+      write:
+        minimum: 5
+        maximum: 100
+        usage: 0.75
   customDomain:
     domainName: ${self:provider.environment.DOMAIN}
     stage: ${self:provider.stage}
@@ -65,6 +83,16 @@ functions:
           path: topicList
           method: get
           cors: true
+  event:
+    handler: handlers/event.handler
+    events:
+      - http:
+          path: event
+          method: post
+          cors: true
+          authorizer: 
+            arn: ${ssm:AUTHORIZER_ARN~true}
+            resultTtlInSeconds: 0
   search:
     handler: handlers/search.handler
     events:
@@ -241,6 +269,66 @@ resources:
         - IndexName: itemIndex
           KeySchema:
           - AttributeName: itemId
+            KeyType: HASH
+          Projection:
+            ProjectionType: KEYS_ONLY
+          ProvisionedThroughput:
+            ReadCapacityUnits: '5'
+            WriteCapacityUnits: '5'
+    eventsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: events-${self:provider.environment.ENV}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: eventType
+            AttributeType: S
+          - AttributeName: itemId
+            AttributeType: S
+          - AttributeName: itemType
+            AttributeType: S
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        GlobalSecondaryIndexes:
+        - IndexName: userIndex
+          KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          Projection:
+            ProjectionType: KEYS_ONLY
+          ProvisionedThroughput:
+            ReadCapacityUnits: '5'
+            WriteCapacityUnits: '5'
+        - IndexName: itemIdIndex
+          KeySchema:
+          - AttributeName: itemId
+            KeyType: HASH
+          Projection:
+            ProjectionType: KEYS_ONLY
+          ProvisionedThroughput:
+            ReadCapacityUnits: '5'
+            WriteCapacityUnits: '5'
+        - IndexName: itemTypeIndex
+          KeySchema:
+          - AttributeName: itemType
+            KeyType: HASH
+          Projection:
+            ProjectionType: KEYS_ONLY
+          ProvisionedThroughput:
+            ReadCapacityUnits: '5'
+            WriteCapacityUnits: '5'
+        - IndexName: eventTypeIndex
+          KeySchema:
+          - AttributeName: eventType
             KeyType: HASH
           Projection:
             ProjectionType: KEYS_ONLY
