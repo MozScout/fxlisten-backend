@@ -12,7 +12,7 @@ module.exports.handler = async (event, context) => {
         items = await list(userId, event);
         return response.success(items);
         break;
-      case 'POST':
+      case 'PUT':
         await update(userId, event);
         return response.success({
           message: 'Successfully added subscription.'
